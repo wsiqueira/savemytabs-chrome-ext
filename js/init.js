@@ -1,79 +1,106 @@
-String.prototype.format = function () {
-	var pattern = /\{\d+\}/g;
-	var args = arguments;
-	return this.replace(pattern, function (capture) { return args[capture.match(/\d+/)]; });
-};
-
-$(function() {
-	setup();
-});
-
-
 // SAVE MY TABS
 chrome.tabs.getAllInWindow(null, function(tabs) {
+	
+	var tabs_html = '';
 	tabs.forEach(function(tab){
-		saveMyTabs(tab.url);	
+		console.log(tab);
+		tabs_html +='<li><label><input type="checkbox" class="link" /><a href="'+ tab.url + '">' + tab.title + '</a></label></li>';
 	});
-	setup();
+	
+	urlList.innerHTML = tabs_html;
+	//setup();
 });
 
-function saveMyTabs(tablink) {
-	console.log(tablink);
-	var newNode = document.createElement("li");
+/* $(document).ready(function() {
+	//setup();
+}); */
+
+document.addEventListener('DOMContentLoaded', function () {
+	document.getElementById('btncheckall').addEventListener('click', checkall);
 	
-	urlList.appendChild(newNode);
-	newNode.innerHTML='<label><input type="checkbox" class="custom" /><span>' + tablink + '</span></label>';
-}
+	document.getElementById('add').addEventListener('click', addToBookmark);
+	document.getElementById('copy').addEventListener('click', copyToClipboard);
+});
 
-
-
-/* 
-	Theme Name: Function - FORM ELEMENTS
-	Description: JS desenvolvido para EWTI pela Amendolas Web
-	Author: Murilo Amendola
-	Empresa: Amendolas Web
-	Author URI: http://www.amendolas.com.br
-	Version: 0.0.0.5
-*/
-function setup(){
-var parentHtml = '<span class="mask{0}"/>';
-	$('input.custom[type=radio], input.custom[type=checkbox], input.custom[type=file], select.custom').each(function(index) {
-		var obj = $(this).clone();
-		var type = obj.is('select') ? 'select' : obj.attr('type');
-		var title = obj.attr('title') === undefined ? '' : obj.attr('title');
+(function(d){
+	addToBookmark = function(e){
+		console.log(e);
 		
-		var parentObj = $(parentHtml.format(type));
-		parentObj.append(obj);
+		bookmarklist();
 		
-		if(obj.is('select, input.custom[type=file]')) {
-			var boxText = $('<span class="text"/>').text(  parentObj.find(':selected').text() );
-			parentObj.append(boxText).append('<span class="btn">' + title + '</span>');
+		var links_checked = document.querySelectorAll('.link:checked');
+		
+		for (var i = 0; i < links_checked.length; i++){
+			var anchor = links_checked[i].nextSibling;
+			chrome.bookmarks.create({
+				title: anchor.innerText,
+				url: anchor.href
+			});
+			links_checked[i].checked = false;
 		}
 		
-		if(!obj.is('select') && obj.is(':checked')) parentObj.addClass('active');
-		
-		$(this).replaceWith(parentObj);
-	});
+		return false;
+	},
 	
-	$('input.custom[type=radio], input.custom[type=checkbox]').change( function (){
-		var obj = $(this);
+	copyToClipboard = function(e){
+		console.log(e);
 		
-		$('input.custom[name='+ obj.attr('name') + ']').parent().removeClass('active');
+		var links_text = '';
+		var links_checked = document.querySelectorAll('.link:checked');
 		
-		obj.parent().toggleClass('active');
-	});
-	
-	$('select.custom, input.custom[type=file]').change(function() {
-		var select = $(this);
-		var selectedText = select.parent().find('span.text');
+		for (var i = 0; i < links_checked.length; i++){
+			var text = links_checked[i].nextSibling.href;
+			if(isUrl(text)){
+				links_text += text + "\n";
+			}
+		}
 		
-		var value = select.is('select') ? select.find(':selected').text() : select.val();
+		var textarea = document.createElement('textarea');
+		
+		document.body.appendChild(textarea);
 
-		selectedText.html(value);
-	});
-}
+		textarea.value = links_text;
+		textarea.focus();
+		textarea.select();
 
-
+		//document.execCommand('SelectAll');
+		//document.execCommand("Copy", false, null);
+		document.execCommand( 'Copy' );
+		
+		document.body.removeChild(textarea);
+		
+		return false;
+	},
+	isUrl = function(s) {
+		return /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(s);
+	},
+	bookmarklist = function(){
 	
+		chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
+			console.log(bookmarkTreeNodes);
+		});
 	
+	},
+	checkall = function(){
+		var links_checked = document.querySelectorAll('.link:checked');
+		var checked = 0;
+		for(var i = 0; i < links_checked.length; i++){
+			links_checked[i].checked = true;
+			checked++;
+		}
+		if(checked == 0) uncheckall();
+		return false;
+	},
 
+	uncheckall = function(){
+		var links_checked = document.querySelectorAll('.link:checked');
+		for( var i = 0; i < links_checked.length; i++){
+			links_checked[i].checked = false;
+		}
+		return false;
+	}
+}(document));
+
+String.prototype.format = function () {
+	return this.replace(/\{\d+\}/g, function (capture) { return arguments[capture.match(/\d+/)]; });
+};
