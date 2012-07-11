@@ -1,20 +1,25 @@
 {
-  "name": "Sava my Tabs",
-  "description": "save all the URLs of your tabs at once.",
-  "manifest_version": 2,
-  "version": "1.0",
-  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
-  
-  "permissions": [
-	"bookmarks",
-    "tabs"],
-  
-  "browser_action": {
-      "default_title": "Sava my Tabs",
-      "default_icon": "img/icons/icon48.png",
-      "default_popup": "index.html"},
-  
-  "icons": {
+	"name": "Sava my Tabs",
+	"description": "save all the URLs of your tabs at once.",
+	"manifest_version": 2,
+	"version": "1.0",
+	"content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
+	
+	"background": {
+		"scripts": ["js/tabs.js"]
+	},
+	
+	"permissions": [
+		"contextMenus",
+			"bookmarks",
+	"tabs"],
+	
+	"browser_action": {
+		"default_title": "Sava my Tabs",
+		"default_icon": "img/icons/icon48.png",
+		"default_popup": "index.html"},
+	
+	"icons": {
 		"16": "img/icons/icon16.png",
 		"48": "img/icons/icon48.png",
 		"128": "img/icons/icon128.png"}

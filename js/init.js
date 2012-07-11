@@ -3,12 +3,10 @@ chrome.tabs.getAllInWindow(null, function(tabs) {
 	
 	var tabs_html = '';
 	tabs.forEach(function(tab){
-		console.log(tab);
 		tabs_html +='<li><label><input type="checkbox" class="link" /><a href="'+ tab.url + '">' + tab.title + '</a></label></li>';
 	});
 	
 	urlList.innerHTML = tabs_html;
-	//setup();
 });
 
 /* $(document).ready(function() {
@@ -54,7 +52,7 @@ document.addEventListener('DOMContentLoaded', function () {
 				links_text += text + "\n";
 			}
 		}
-		
+		console.log(text);
 		var textarea = document.createElement('textarea');
 		
 		document.body.appendChild(textarea);
@@ -82,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	},
 	checkall = function(){
-		var links_checked = document.querySelectorAll('.link:checked');
+		var links_checked = document.querySelectorAll('.link:not(:checked)');
 		var checked = 0;
 		for(var i = 0; i < links_checked.length; i++){
 			links_checked[i].checked = true;
