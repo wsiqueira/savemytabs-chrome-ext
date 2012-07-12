@@ -3,7 +3,6 @@
 	"description": "save all the URLs of your tabs at once.",
 	"manifest_version": 2,
 	"version": "1.0",
-	"content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
 	
 	"background": {
 		"scripts": ["js/tabs.js"]
@@ -11,8 +10,8 @@
 	
 	"permissions": [
 		"contextMenus",
-			"bookmarks",
-	"tabs"],
+		"bookmarks",
+		"tabs"],
 	
 	"browser_action": {
 		"default_title": "Sava my Tabs",

@@ -3,15 +3,12 @@ chrome.tabs.getAllInWindow(null, function(tabs) {
 	
 	var tabs_html = '';
 	tabs.forEach(function(tab){
+		if(!isUrl(tab.url)) return;
 		tabs_html +='<li><label><input type="checkbox" class="link" /><a href="'+ tab.url + '">' + tab.title + '</a></label></li>';
 	});
 	
 	urlList.innerHTML = tabs_html;
 });
-
-/* $(document).ready(function() {
-	//setup();
-}); */
 
 document.addEventListener('DOMContentLoaded', function () {
 	document.getElementById('btncheckall').addEventListener('click', checkall);
@@ -47,10 +44,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		var links_checked = document.querySelectorAll('.link:checked');
 		
 		for (var i = 0; i < links_checked.length; i++){
-			var text = links_checked[i].nextSibling.href;
-			if(isUrl(text)){
-				links_text += text + "\n";
-			}
+			links_text += links_checked[i].nextSibling.href + "\n";
 		}
 		console.log(text);
 		var textarea = document.createElement('textarea');
