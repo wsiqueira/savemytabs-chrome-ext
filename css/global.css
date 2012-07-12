@@ -92,7 +92,7 @@ input[type='submit']):not(.custom-appearance):not(.link-button)) {-webkit-transi
 label > input:disabled:-webkit-any([type='checkbox'], [type='radio']) ~ span {color: #999;}
 
 /* SAVE MY TABS **************************************************************/
-body{width:100%;margin:0;padding:0;color:#5a5a5a;font-size:10pt;font-family:Arial, Helvetica, sans-serif;background-color:#fff;}
+body{width:100%;max-height:580px;margin:0;padding:0;color:#5a5a5a;font-size:10pt;font-family:Arial, Helvetica, sans-serif;background-color:#fff;overflow:hidden;}
 
 
 img{display:block;margin:0 auto;border:none;}
@@ -119,9 +119,18 @@ header h1{display:block;margin:0;padding:0;}
 
 
 
-ul{margin:0;padding:0;}
+ul{display:block;max-height:450px;margin:0;padding:0;overflow:auto;}
 li{list-style:none;width:100%;height:14px;margin:0 0 5px 0;overflow:hidden;word-wrap:break-word; text-wrap:nowrap;}
 li:last-child{margin:0;}
+
+
+
+
+
+
+
+
+
 
 
 
@@ -131,9 +140,29 @@ form fieldset label{display:block;}
 form fieldset label input[type="checkbox"]{float:left;margin-top:2px!important;}
 form fieldset label a{float:left;width:230px;margin:0 0 0 6px;}
 
-/*form fieldset#list{display:none;}*/
 
-
+/* Let's get this party started */
+::-webkit-scrollbar {
+    width: 12px;
+}
+ 
+/* Track */
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+}
+ 
+/* Handle */
+::-webkit-scrollbar-thumb {
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    background: rgba(255,0,0,0.8); 
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.5); 
+}
+::-webkit-scrollbar-thumb:window-inactive {
+	background: rgba(255,0,0,0.4); 
+}
 
 
 
