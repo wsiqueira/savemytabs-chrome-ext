@@ -4,14 +4,14 @@ chrome.tabs.getAllInWindow(null, function(tabs) {
 	var tabs_html = '';
 	tabs.forEach(function(tab){
 		if(!isUrl(tab.url)) return;
-		tabs_html +='<li><label><input type="checkbox" class="link" /><a href="'+ tab.url + '">' + tab.title + '</a></label></li>';
+		tabs_html +='<li><label><input type="checkbox" class="link" checked="checked"/><a href="'+ tab.url + '">' + tab.title + '</a></label></li>';
 	});
 	
 	urlList.innerHTML = tabs_html;
 });
 
 document.addEventListener('DOMContentLoaded', function () {
-	document.getElementById('btncheckall').addEventListener('click', checkall);
+	document.getElementById('check').addEventListener('click', checkall);
 	
 	document.getElementById('add').addEventListener('click', addToBookmark);
 	document.getElementById('copy').addEventListener('click', copyToClipboard);
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		for (var i = 0; i < links_checked.length; i++){
 			links_text += links_checked[i].nextSibling.href + "\n";
 		}
-		console.log(text);
+		
 		var textarea = document.createElement('textarea');
 		
 		document.body.appendChild(textarea);
@@ -81,14 +81,19 @@ document.addEventListener('DOMContentLoaded', function () {
 			checked++;
 		}
 		if(checked == 0) uncheckall();
+		else check.innerText = "None";
 		return false;
 	},
 
 	uncheckall = function(){
 		var links_checked = document.querySelectorAll('.link:checked');
+		var checked = 0;
 		for( var i = 0; i < links_checked.length; i++){
 			links_checked[i].checked = false;
+			checked++;
 		}
+		if(checked != 0) check.innerText = "All";
+		
 		return false;
 	}
 }(document));
