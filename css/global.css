@@ -112,7 +112,8 @@ a:hover{color:#000;text-decoration:underline;}
 .favorites .icon{background:url(../img/icons/icon_favorites.png) 0 0 no-repeat}
 .clipboard .icon{background:url(../img/icons/icon_clipboard.png) 0 0 no-repeat}
 .save .icon{background:url(../img/icons/icon_save.png) 0 0 no-repeat}
-
+.new .icon{background:url(../img/icons/icon_new.png) 0 0 no-repeat}
+.cancel .icon{background:url(../img/icons/icon_cancel.png) 0 0 no-repeat}
  
 
 main{display:block;width:250px;max-height:600px;padding:10px;}
