@@ -3,103 +3,142 @@ chrome.tabs.getAllInWindow(null, function(tabs) {
 	
 	var tabs_html = '';
 	tabs.forEach(function(tab){
-		if(!isUrl(tab.url)) return;
+		if(tab.pinned || !Tabs.isUrl(tab.url)) return;
 		tabs_html +='<li><label><input type="checkbox" class="link" checked="checked"/><a href="'+ tab.url + '">' + tab.title + '</a></label></li>';
 	});
 	
 	urlList.innerHTML = tabs_html;
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-	document.getElementById('check').addEventListener('click', checkall);
-	
-	document.getElementById('add').addEventListener('click', addToBookmark);
-	document.getElementById('copy').addEventListener('click', copyToClipboard);
-});
+var $ = function(e){
 
-(function(d){
-	addToBookmark = function(e){
-		console.log(e);
-		
-		bookmarklist();
-		
-		var links_checked = document.querySelectorAll('.link:checked');
-		
-		for (var i = 0; i < links_checked.length; i++){
-			var anchor = links_checked[i].nextSibling;
-			chrome.bookmarks.create({
-				title: anchor.innerText,
-				url: anchor.href
-			});
-			links_checked[i].checked = false;
-		}
-		
-		return false;
-	},
+	var el = window[e];
 	
-	copyToClipboard = function(e){
-		console.log(e);
-		
-		var links_text = '';
-		var links_checked = document.querySelectorAll('.link:checked');
-		
-		for (var i = 0; i < links_checked.length; i++){
-			links_text += links_checked[i].nextSibling.href + "\n";
-		}
-		
-		var textarea = document.createElement('textarea');
-		
-		document.body.appendChild(textarea);
+	if(el.length == 0){
+		el = document.querySelectorAll(e);
+	}
+	//console.log(el);
 
-		textarea.value = links_text;
-		textarea.focus();
-		textarea.select();
-
-		//document.execCommand('SelectAll');
-		//document.execCommand("Copy", false, null);
-		document.execCommand( 'Copy' );
-		
-		document.body.removeChild(textarea);
-		
-		return false;
-	},
-	isUrl = function(s) {
-		return /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(s);
-	},
-	bookmarklist = function(){
-	
-		chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
-			console.log(bookmarkTreeNodes);
-		});
-	
-	},
-	checkall = function(){
-		var links_checked = document.querySelectorAll('.link:not(:checked)');
-		var checked = 0;
-		for(var i = 0; i < links_checked.length; i++){
-			links_checked[i].checked = true;
-			checked++;
-		}
-		if(checked == 0) uncheckall();
-		else check.innerText = "None";
-		return false;
-	},
-
-	uncheckall = function(){
-		var links_checked = document.querySelectorAll('.link:checked');
-		var checked = 0;
-		for( var i = 0; i < links_checked.length; i++){
-			links_checked[i].checked = false;
-			checked++;
-		}
-		if(checked != 0) check.innerText = "All";
-		
-		return false;
+	el.bind = function(event, func){
+		this.addEventListener(event, func);
 	}
 	
-	
-}(document));
+	return el;
+}
 
-String.prototype.format = function () {
-	return this.replace(/\{\d+\}/g, function (capture) { return arguments[capture.match(/\d+/)]; });
+var Tabs = function(){};
+
+Tabs.configAddToBookmark = function(e){
+	Tabs.notification('info', "ola voce");
+	bookmark.style.display = "block";
 };
+
+Tabs.cancelAddToBookmark = function(e){
+	bookmark.style.display = "none";
+};
+
+Tabs.addToBookmark = function(e){
+	console.log(e);
+	
+	Tabs.bookmarklist();
+	
+	var links_checked = document.querySelectorAll('.link:checked');
+	
+	for (var i = 0; i < links_checked.length; i++){
+		var anchor = links_checked[i].nextSibling;
+		chrome.bookmarks.create({
+			title: anchor.innerText,
+			url: anchor.href
+		});
+		links_checked[i].checked = false;
+	}
+	
+	return false;
+};
+
+Tabs.copyToClipboard = function(e){
+	
+	var links_text = '';
+	var links_checked = document.querySelectorAll('.link:checked');
+	
+	for (var i = 0; i < links_checked.length; i++){
+		links_text += links_checked[i].nextSibling.href + "\n";
+	}
+	
+	var textarea = document.createElement('textarea');
+	
+	document.body.appendChild(textarea);
+
+	textarea.value = links_text;
+	textarea.focus();
+	textarea.select();
+
+	//document.execCommand('SelectAll');
+	//document.execCommand("Copy", false, null);
+	document.execCommand( 'Copy' );
+	
+	document.body.removeChild(textarea);
+	
+	Tabs.notification('info', "Links copied to clipboard");
+	
+	return false;
+};
+
+Tabs.isUrl = function(s) {
+	return /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(s);
+};
+
+Tabs.bookmarklist = function(){
+
+	chrome.bookmarks.getTree(function(bookmarkTreeNodes) {
+		console.log(bookmarkTreeNodes);
+	});
+
+};
+
+Tabs.checkall = function(){
+	var links_checked = document.querySelectorAll('.link:not(:checked)');
+	var checked = 0;
+	for(var i = 0; i < links_checked.length; i++){
+		links_checked[i].checked = true;
+		checked++;
+	}
+	if(checked == 0) Tabs.uncheckall();
+	else check.innerText = "None";
+	return false;
+};
+
+Tabs.uncheckall = function(){
+	var links_checked = document.querySelectorAll('.link:checked');
+	var checked = 0;
+	for( var i = 0; i < links_checked.length; i++){
+		links_checked[i].checked = false;
+		checked++;
+	}
+	if(checked != 0) check.innerText = "All";
+	
+	return false;
+};
+
+Tabs.notification = function(type, message){
+
+	notification.className = type;
+	notification.innerHTML = message;
+	notification.style.display = "block";
+	
+	setTimeout(function() { notification.style.display = "none" }, 3000);
+}
+
+/* function addElementAfter(node,tag,id,htm){
+	var ne = document.createElement(tag);
+	if(id) ne.id = id;
+	if(htm) ne.innerHTML = htm;
+	node.parentNode.insertBefore(ne,node.nextSibling);
+}
+ */
+document.addEventListener('DOMContentLoaded', function () {
+	$('check').bind('click', Tabs.checkall);
+	$('add').bind('click', Tabs.configAddToBookmark);
+	$('copy').bind('click', Tabs.copyToClipboard);
+	$('cancel').bind('click', Tabs.cancelAddToBookmark);
+});

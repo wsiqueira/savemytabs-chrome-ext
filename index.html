@@ -28,7 +28,7 @@
 						</div>
 					</fieldset>
                     
-                    <fieldset>
+                    <fieldset id="bookmark" style="display:none">
                     	<h2>Bookmark list</h2>
                         
                         <select>
@@ -59,7 +59,7 @@
 						</div>
                         <div class="btn cancel">
 							<span class="icon">&nbsp;</span>
-							<input id="create" type="button" value="Cancel">
+							<input id="cancel" type="button" value="Cancel">
 						</div>
                         
                         
@@ -67,11 +67,8 @@
                     
 				</form>
 			</section>
-            
-            <alert class="success">Lorem ipsum dolor sit amet</alert>
-            <alert class="error">Lorem ipsum dolor sit amet</alert>
-            <alert class="alert">Lorem ipsum dolor sit amet</alert>
-            <alert class="info">Lorem ipsum dolor sit amet</alert>
+            <!-- success | error | alert | info -->
+            <alert id="notification" class="" style="display:none"></alert>
             
             <footer>
             	<p>About <a href="http://ext.sogringagem.com.br/save-my-tabs" target="_blank" title="Save My Tabs">Save My Tabs</a></p>
