@@ -96,6 +96,8 @@ document.addEventListener('DOMContentLoaded', function () {
 		
 		return false;
 	}
+	
+	
 }(document));
 
 String.prototype.format = function () {
