@@ -29,7 +29,7 @@ var $ = function(e){
 var Tabs = function(){};
 
 Tabs.configAddToBookmark = function(e){
-	Tabs.notification('info', "ola voce");
+	Tabs.notification('info', "Select a destination folder");
 	bookmark.style.display = "block";
 };
 
@@ -79,7 +79,7 @@ Tabs.copyToClipboard = function(e){
 	
 	document.body.removeChild(textarea);
 	
-	Tabs.notification('info', "Links copied to clipboard");
+	Tabs.notification('info', "URLs copied to the clipboard");
 	
 	return false;
 };

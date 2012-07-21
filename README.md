@@ -1,4 +1,4 @@
 savemytabs-chrome-ext
 =====================
 
-Extenção para o Google chrome. Copia todas as URLs abertas nas abas e mostra para o usuario adcionar aos favoritos ou copia na memoria.
+Extensão para o Google Chrome. Copia todas as URLs abertas nas abas e mostra para o usuário adicionar aos favoritos ou copia na memoria.

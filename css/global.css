@@ -108,7 +108,11 @@ a:hover{color:#000;text-decoration:underline;}
 .btn{float:left;position:relative;}
 .btn input{-webkit-padding-start:22px!important;}
 .btn .icon{width:16px;height:16px;margin:-8px 0 0 0;position:absolute;top:50%;left:5px;cursor:pointer;}
-.favorites{margin:0 5px 0 0;}
+
+.favorites,
+.new,
+.save{margin:0 5px 0 0;}
+
 .favorites .icon{background:url(../img/icons/icon_favorites.png) 0 0 no-repeat}
 .clipboard .icon{background:url(../img/icons/icon_clipboard.png) 0 0 no-repeat}
 .save .icon{background:url(../img/icons/icon_save.png) 0 0 no-repeat}
