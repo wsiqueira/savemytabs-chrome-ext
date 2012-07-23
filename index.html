@@ -13,10 +13,10 @@
 			<section id="result">
 				<form action="" name="form_links">
 					
-                    <fieldset class="list">
+					<fieldset class="list">
 						<ul id="urlList"></ul>
 					</fieldset>
-                    
+					
 					<fieldset>
 						<div class="btn favorites">
 							<span class="icon">&nbsp;</span>
@@ -27,52 +27,36 @@
 							<input id="copy" type="button" value="Copy to clipboard"><!--value change to "It's Copied!"-->
 						</div>
 					</fieldset>
-                    
-                    <fieldset id="bookmark" style="display:none">
-                    	<h2>Bookmark list</h2>
-                        
-                        <select>
-                            <option>Level 1</option>
-                            <option>&nbsp;&nbsp;Level 2</option>
-                            <option>&nbsp;&nbsp;Level 2</option>
-                            <option>&nbsp;&nbsp;Level 2</option>
-                            <option>&nbsp;&nbsp;Level 2</option>
-                            <option>&nbsp;&nbsp;&nbsp;&nbsp;Level 3</option>
-                            <option>&nbsp;&nbsp;&nbsp;&nbsp;Level 3</option>
-                            <option>&nbsp;&nbsp;&nbsp;&nbsp;Level 3</option>
-                            <option>&nbsp;&nbsp;&nbsp;&nbsp;Level 3</option>
-                            <option>&nbsp;&nbsp;&nbsp;&nbsp;Level 3</option>
-                            <option>&nbsp;&nbsp;&nbsp;&nbsp;Level 3</option>
-                            <option>&nbsp;&nbsp;&nbsp;&nbsp;Level 3</option>
-                            <option>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Level 4</option>
-                        </select>
-                        
-                        <input id="nameNewFolder" type="text" placeholder="Name to folder">
-                        
-                        <div class="btn new">
+					
+					<fieldset id="bookmark" style="display:none">
+						<h2>Bookmark list</h2>
+						
+						<select id="bookmarkList"></select>
+						
+						<input id="newfolder" type="text" placeholder="Name to folder" style="display:none">
+						
+						<div class="btn new">
 							<span class="icon">&nbsp;</span>
 							<input id="create" type="button" value="New folder">
 						</div>
-                        <div class="btn save">
+						<div class="btn save">
 							<span class="icon">&nbsp;</span>
 							<input id="save" type="button" value="Save">
 						</div>
-                        <div class="btn cancel">
+						<div class="btn cancel">
 							<span class="icon">&nbsp;</span>
 							<input id="cancel" type="button" value="Cancel">
 						</div>
-                        
-                        
 					</fieldset>
-                    
+					
 				</form>
 			</section>
-            <!-- success | error | alert | info -->
-            <alert id="notification" class="" style="display:none"></alert>
-            
-            <footer>
-            	<p>About <a href="https://github.com/wsiqueira/savemytabs-chrome-ext/wiki" target="_blank" title="Save My Tabs">Save My Tabs</a></p>
-            </footer>
+			<!-- success | error | alert | info -->
+			<alert id="notification" class="" style="display:none"></alert>
+			
+			<footer>
+				<p>About <a href="https://github.com/wsiqueira/savemytabs-chrome-ext/wiki" target="_blank" title="Save My Tabs">Save My Tabs</a></p>
+			</footer>
 		</main>
 		<script src="js/init.js"></script>
 	</body>

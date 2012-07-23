@@ -106,7 +106,7 @@ a:hover{color:#000;text-decoration:underline;}
 
 
 .btn{float:left;position:relative;}
-.btn input{-webkit-padding-start:22px!important;}
+.btn input{-webkit-padding-start:22px!important;cursor:pointer;}
 .btn .icon{width:16px;height:16px;margin:-8px 0 0 0;position:absolute;top:50%;left:5px;cursor:pointer;}
 
 .favorites,
