@@ -114,7 +114,7 @@ Tabs.addToBookmark = function(bookmarkTreeNode){
 	}
 	localStorage.bookmark = parentId;
 	
-	Tabs.notification('info', "URLs saved to favorite");
+	Tabs.notification('success', "URLs saved to favorite");
 };
 
 Tabs.appendNewOption = function(title, value, parentId){

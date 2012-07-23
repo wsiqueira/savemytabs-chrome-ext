@@ -122,7 +122,8 @@ a:hover{color:#000;text-decoration:underline;}
 
 main{display:block;width:250px;max-height:600px;padding:10px;}
 
-header h1{display:block;margin:0;padding:0;}
+h1{display:block;margin:0;padding:0;}
+h2{display:block;margin:0;padding:0;}
 
 
 
@@ -148,8 +149,8 @@ form fieldset.list{margin-top:5px;padding:10px 0;border:#000 1px solid;border-le
 form fieldset label{display:block;}
 form fieldset label input[type="checkbox"]{float:left;margin-top:2px!important;}
 form fieldset label a{float:left;width:212px;margin:0 0 0 6px;}
-form fieldset select{width:100%;}
-form fieldset input[type="text"]{display:block;width:100%;margin:10px 0;}
+form fieldset select{width:100%;margin:0 0 10px 0;}
+form fieldset input[type="text"]{display:block;width:100%;margin:0 0 10px 0;}
 /* FORM ###################################################################################################*/
 
 
