@@ -2,7 +2,7 @@
 	"name": "Save my Tabs",
 	"description": "save all the URLs of your tabs at once.",
 	"manifest_version": 2,
-	"version": "1.0",
+	"version": "1.1",
 	
 	"background": {
 		"scripts": ["js/tabs.js"]
