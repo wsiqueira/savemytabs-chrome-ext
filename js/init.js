@@ -67,7 +67,7 @@ Tabs.configNewFolder = function(e){
 	
 	function updateNotification(e){
 		if(newfolder.value.length > 0){
-			Tabs.notification('info', "Folder: '" + newfolder.value + "' will be created inside: '" + bookmarkList.selectedOptions[0].innerText.trim() + "'", false);
+			Tabs.notification('info', "Folder: '" + newfolder.value + "' will be created inside: '" + bookmarkList.options[bookmarkList.selectedIndex].innerText.trim() + "'", false);
 		}else{
 			$(notification).hide();
 		}
@@ -78,7 +78,7 @@ Tabs.saveBookmark = function(e){
 	
 	if(newfolder.value.length > 0){
 		chrome.bookmarks.create({
-			parentId: bookmarkList.selectedOptions[0].value,
+			parentId: bookmarkList.options[bookmarkList.selectedIndex].value,
 			title: newfolder.value,
 		}, Tabs.addToBookmark);
 		
@@ -98,7 +98,7 @@ Tabs.addToBookmark = function(bookmarkTreeNode){
 		parentId = bookmarkTreeNode.id;
 		Tabs.appendNewOption(bookmarkTreeNode.title, parentId, bookmarkTreeNode.parentId);
 	}else{
-		parentId = bookmarkList.selectedOptions[0].value;
+		parentId = bookmarkList.options[e.selectedIndex].value;
 	}
 	
 	var links_checked = document.querySelectorAll('.link:checked');
