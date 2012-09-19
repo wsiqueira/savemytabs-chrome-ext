@@ -125,16 +125,12 @@ main{display:block;width:250px;max-height:600px;padding:10px;}
 h1{display:block;margin:0;padding:0;}
 h2{display:block;margin:0;padding:0;}
 
+.counter{float:right;}
+.counter span{font-weight:bold;color:#000;}
 
 
-ul{display:block;max-height:300px;margin:0;padding:0;overflow:auto;}
-li{list-style:none;width:100%;height:14px;margin:0 0 5px 0;overflow:hidden;word-wrap:break-word; text-wrap:nowrap;}
-li:last-child{margin:0;}
-
-
-
-
-
+ul{display:block;max-height:288px;margin:0;padding:0;overflow:auto;}
+li{list-style:none;width:235px;white-space:nowrap;overflow:hidden;}
 
 
 
@@ -146,9 +142,8 @@ form{margin:0;padding:0;}
 form fieldset{display:block;margin:10px 0;padding:0;border:none;}
 form fieldset.list{margin-top:5px;padding:10px 0;border:#000 1px solid;border-left:none;border-right:none;border-color:rgba(0, 0, 0, 0.3);}
 
-form fieldset label{display:block;}
-form fieldset label input[type="checkbox"]{float:left;margin-top:2px!important;}
-form fieldset label a{float:left;width:212px;margin:0 0 0 6px;}
+form fieldset input[type="checkbox"]{float:left;margin-top:2px!important;}
+form fieldset a{margin:0 0 0 5px;}
 form fieldset select{width:100%;margin:0 0 10px 0;}
 form fieldset input[type="text"]{display:block;width:100%;margin:0 0 10px 0;}
 /* FORM ###################################################################################################*/

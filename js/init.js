@@ -4,7 +4,7 @@ chrome.tabs.getAllInWindow(null, function(tabs) {
 	var tabs_html = '';
 	tabs.forEach(function(tab){
 		if(tab.pinned || !Tabs.isUrl(tab.url)) return;
-		tabs_html +='<li><label><input type="checkbox" class="link" checked="checked"/><a href="'+ tab.url + '">' + tab.title + '</a></label></li>';
+		tabs_html +='<li><input type="checkbox" class="link" checked="checked"/><a href="'+ tab.url + '" title="'+ tab.title + '" target="_blank">' + tab.title + '</a></li>';
 	});
 	
 	urlList.innerHTML = tabs_html;
