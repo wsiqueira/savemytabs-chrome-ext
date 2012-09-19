@@ -2,11 +2,14 @@
 chrome.tabs.getAllInWindow(null, function(tabs) {
 	
 	var tabs_html = '';
+	var count = 0;
 	tabs.forEach(function(tab){
 		if(tab.pinned || !Tabs.isUrl(tab.url)) return;
 		tabs_html +='<li><input type="checkbox" class="link" checked="checked"/><a href="'+ tab.url + '" title="'+ tab.title + '" target="_blank">' + tab.title + '</a></li>';
+		count++;
 	});
 	
+	counter.innerHTML = '<span>' + count + '</span> URL' + (count != 1 ?'s':'');
 	urlList.innerHTML = tabs_html;
 });
 
@@ -98,7 +101,7 @@ Tabs.addToBookmark = function(bookmarkTreeNode){
 		parentId = bookmarkTreeNode.id;
 		Tabs.appendNewOption(bookmarkTreeNode.title, parentId, bookmarkTreeNode.parentId);
 	}else{
-		parentId = bookmarkList.options[e.selectedIndex].value;
+		parentId = bookmarkList.options[bookmarkList.selectedIndex].value;
 	}
 	
 	var links_checked = document.querySelectorAll('.link:checked');
