@@ -119,6 +119,8 @@ Tabs.addToBookmark = function(bookmarkTreeNode){
 		localStorage.bookmark = parentId;
 		
 		Tabs.notification('success', "URLs saved to favorite");
+	}else{
+		Tabs.notification('alert', "Select a URL from list");
 	}
 };
 
@@ -140,8 +142,10 @@ Tabs.copyToClipboard = function(e){
 	var links_text = '';
 	var links_checked = document.querySelectorAll('.link:checked');
 	
-	if(links_checked.length == 0)
+	if(links_checked.length == 0){
+		Tabs.notification('alert', "Select a URL from list");
 		return false;
+	}
 	
 	for (var i = 0; i < links_checked.length; i++){
 		links_text += links_checked[i].nextSibling.href + "\n";
