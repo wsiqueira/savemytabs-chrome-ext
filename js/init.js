@@ -106,18 +106,20 @@ Tabs.addToBookmark = function(bookmarkTreeNode){
 	
 	var links_checked = document.querySelectorAll('.link:checked');
 	
-	for (var i = 0; i < links_checked.length; i++){
-		var anchor = links_checked[i].nextSibling;
-		chrome.bookmarks.create({
-			parentId: parentId,
-			title: anchor.innerText,
-			url: anchor.href
-		});
-		links_checked[i].checked = false;
+	if(links_checked.length > 0){ //checks for selected links
+		for (var i = 0; i < links_checked.length; i++){
+			var anchor = links_checked[i].nextSibling;
+			chrome.bookmarks.create({
+				parentId: parentId,
+				title: anchor.innerText,
+				url: anchor.href
+			});
+			links_checked[i].checked = false;
+		}
+		localStorage.bookmark = parentId;
+		
+		Tabs.notification('success', "URLs saved to favorite");
 	}
-	localStorage.bookmark = parentId;
-	
-	Tabs.notification('success', "URLs saved to favorite");
 };
 
 Tabs.appendNewOption = function(title, value, parentId){
@@ -137,6 +139,9 @@ Tabs.copyToClipboard = function(e){
 	
 	var links_text = '';
 	var links_checked = document.querySelectorAll('.link:checked');
+	
+	if(links_checked.length == 0)
+		return false;
 	
 	for (var i = 0; i < links_checked.length; i++){
 		links_text += links_checked[i].nextSibling.href + "\n";
