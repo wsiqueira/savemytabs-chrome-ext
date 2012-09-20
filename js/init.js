@@ -230,8 +230,7 @@ Tabs.dumpTreeNodes = function(bookmarkNodes, deep) {
 };
 
 Tabs.dumpNode = function(bookmarkNode, deep) {
-	if (bookmarkNode.children && bookmarkNode.children.length > 0){
-		//console.log(bookmarkNode, deep);
+	if (bookmarkNode.children){ // bookmarkNode.children.length > 0 can I get empty folder?
 		
 		var option = "";
 		if (bookmarkNode.title) {
