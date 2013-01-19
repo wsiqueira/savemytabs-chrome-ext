@@ -3,6 +3,16 @@
 		"message": "pt-BR"
 	},
 	"description": {
-		"message": ""
+		"message": "Salve todas abas de uma vez.
+
+O Save my Tabs é uma extensão que com apenas um clique é capaz de salvar todas as abas.
+Abertas de seu navegador.
+Após o clique você tem a opção de:
+- Selecionar as abas que quer salvar
+- Salvar nos favoritos escolhendo o diretório à ser salvo ou criando um novo diretório.
+- Copiar para o clipboard, o que lhe possibilita colar os links onde quiser, podendo enviar por email, mensagem, etc.
+Além de salvar as abas que estejam abertas no seu navegador, o Save my Tabs tem o recurso de abrir em várias abas o conteúdo de uma lista de URL's. Você pode selecionar a lista de URL's e com o botão direito do mouse escolher a opção "Abrir links em novas abas".
+
+Por SG Web e Monteverde"
 	}
 }
