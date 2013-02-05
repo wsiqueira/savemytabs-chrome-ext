@@ -3,15 +3,6 @@
 		"message": "en"
 	},
 	"description": {
-		"message": "Save all tabs at once.
-
-The Save my Tabs is an extension that with one click can save all open tabs in your browser.
-After the click, you have the option of:
-- Select the tab you want to save
-- Save to Favorites choosing the directory to be saved or creating a new directory.
-- Copy to clipboard, which allows it to where you want to paste the links and can send it by email, message, etc..
-In addition to saving the tabs that are open in your browser, Save my Tabs has the capability to open multiple tabs content from a list of URL's. You can select a list of URL's and with the right mouse button to choose "Open links in new tabs."
-
-by SG Web and Monteverde."
+		"message": "Save all tabs at once."
 	}
 }
