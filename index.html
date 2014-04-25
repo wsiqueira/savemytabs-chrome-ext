@@ -7,7 +7,7 @@
 		<main>
 			<header>
 				<h1>Save my Tabs</h1>
-				<a href="#" id="check" title="None">None</a>
+				<a href="#" id="check" title="Invert">Invert</a>
                 <div id="counter" class="counter"></div>
 			</header>
 			<section id="result">
@@ -18,11 +18,15 @@
 					<fieldset>
 						<div id="add"class="btn favorites">
 							<span class="icon">&nbsp;</span>
-							<input type="button" value="Add favorites">
+							<input type="button" value="Add">
+						</div>
+						<div id="move"class="btn favorites">
+							<span class="icon">&nbsp;</span>
+							<input type="button" value="Move to">
 						</div>
 						<div id="copy" class="btn clipboard">
 							<span class="icon">&nbsp;</span>
-							<input type="button" value="Copy to clipboard"><!--value change to "It's Copied!"-->
+							<input type="button" value="Copy">
 						</div>
 					</fieldset>
 					<fieldset id="bookmark" style="display:none">
@@ -35,12 +39,13 @@
 						</div>
 						<div id="save" class="btn save">
 							<span class="icon">&nbsp;</span>
-							<input type="button" value="Save">
+							<input id="save_btn" type="button" value="Save">
 						</div>
 						<div id="cancel" class="btn cancel">
 							<span class="icon">&nbsp;</span>
 							<input type="button" value="Cancel">
 						</div>
+						<input type="hidden" id="movetabs" value="0">
 					</fieldset>
 				</form>
 			</section>

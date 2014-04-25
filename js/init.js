@@ -1,18 +1,4 @@
 // SAVE MY TABS
-chrome.tabs.getAllInWindow(null, function(tabs) {
-	
-	var tabs_html = '';
-	var count = 0;
-	tabs.forEach(function(tab){
-		if(tab.pinned || !Tabs.isUrl(tab.url)) return;
-		tabs_html +='<li><input type="checkbox" class="link" checked="checked"/><a href="'+ tab.url + '" title="'+ tab.title + '" target="_blank">' + tab.title + '</a></li>';
-		count++;
-	});
-	
-	counter.innerHTML = '<span>' + count + '</span> URL' + (count != 1 ?'s':'');
-	urlList.innerHTML = tabs_html;
-});
-
 var $ = function(e){
 	
 	var el = e;
@@ -51,6 +37,63 @@ var $ = function(e){
 
 var Tabs = function(){};
 
+Tabs.loadTabs = function() {
+	chrome.tabs.getAllInWindow(null, function(tabs) {
+		
+		var tabs_html = '';
+		var count = 0;
+		var selected = 0;
+		tabs.forEach(function(tab){
+			if(tab.pinned || !Tabs.isUrl(tab.url)) return;
+			
+			check = (tab.highlighted) ? ' checked="checked"' : ''
+			id = 'link' + count;
+			
+			tabs_html += '<li>';
+			tabs_html += '<input type="checkbox" class="link" id="' + id + '"' + check + ' data-tabid="' + tab.id + '"/>';
+			tabs_html += '<a style="display:none" href="'+ tab.url + '" title="'+ tab.title + '" target="_blank">' + tab.title + '</a>';
+			tabs_html += '<label for="' + id + '" style="margin:2px">';
+			tabs_html += '<img style="display:inline;margin:2px;vertical-align:middle" width="16" height="16" src="' + tab.favIconUrl + '" />'
+			tabs_html += tab.title
+			tabs_html += '</label>'
+			tabs_html += '</li>';
+			
+			count++;
+			if (check) selected++;
+		});
+		
+		urlList.innerHTML = tabs_html;
+		Tabs.countSelected()
+
+		// bind recalc
+		for(i=0;i<count;i++) {
+			id = 'link' + i;
+			$(id).bind('click', Tabs.countSelected)
+		}
+	});
+};
+
+Tabs.loadTabs();
+
+Tabs.countSelected = function() {
+	var links_checked = document.querySelectorAll('.link:checked');
+	var links = document.querySelectorAll('.link');
+
+	counter.innerHTML = '<span>' + links_checked.length + ' of ' + links.length + '</span> URL' + (links.length != 1 ?'s':'');
+}
+
+Tabs.wrapAdd = function(e) {
+	movetabs.value = "0";
+	save_btn.value = "Save";
+	Tabs.configAddToBookmark(e);
+}
+
+Tabs.wrapMove = function(e) {
+	movetabs.value = "1";
+	save_btn.value = "Move";
+	Tabs.configAddToBookmark(e);
+}
+
 Tabs.configAddToBookmark = function(e){
 	Tabs.notification('info', "Select a destination folder");
 	Tabs.bookmarklist();
@@ -61,6 +104,7 @@ Tabs.cancelAddToBookmark = function(e){
 	$(notification).hide();
 	$(bookmark).hide();
 };
+
 Tabs.configNewFolder = function(e){
 	$(newfolder).show();
 	
@@ -75,8 +119,8 @@ Tabs.configNewFolder = function(e){
 			$(notification).hide();
 		}
 	}
-	//this.unbind('click', Tabs.configNewFolder);
 };
+
 Tabs.saveBookmark = function(e){
 	
 	if(newfolder.value.length > 0){
@@ -105,9 +149,14 @@ Tabs.addToBookmark = function(bookmarkTreeNode){
 	}
 	
 	var links_checked = document.querySelectorAll('.link:checked');
-	
-	if(links_checked.length > 0){ //checks for selected links
+	var tabids = new Array();
+
+	// save selected links
+	if(links_checked.length > 0){
 		for (var i = 0; i < links_checked.length; i++){
+			
+			tabids.push(parseInt(links_checked[i].dataset.tabid));
+
 			var anchor = links_checked[i].nextSibling;
 			chrome.bookmarks.create({
 				parentId: parentId,
@@ -118,6 +167,12 @@ Tabs.addToBookmark = function(bookmarkTreeNode){
 		}
 		localStorage.bookmark = parentId;
 		
+		// close the tabs that were stored as bookmarks
+		if(movetabs.value == '1') {
+			chrome.tabs.remove(tabids);
+			Tabs.loadTabs();
+		}
+
 		Tabs.notification('success', "URLs saved to favorite");
 	}else{
 		Tabs.notification('alert', "Select a URL from list");
@@ -159,8 +214,6 @@ Tabs.copyToClipboard = function(e){
 	textarea.focus();
 	textarea.select();
 
-	//document.execCommand('SelectAll');
-	//document.execCommand("Copy", false, null);
 	document.execCommand( 'Copy' );
 	
 	document.body.removeChild(textarea);
@@ -179,29 +232,15 @@ Tabs.bookmarklist = function(){
 };
 
 Tabs.checkall = function(){
-	var links_checked = document.querySelectorAll('.link:not(:checked)');
-	var checked = 0;
-	for(var i = 0; i < links_checked.length; i++){
-		links_checked[i].checked = true;
-		checked++;
+	var links = document.querySelectorAll('.link');
+	for(var i = 0; i < links.length; i++){
+		links[i].checked = !links[i].checked;
 	}
-	if(checked == 0) Tabs.uncheckall();
-	else check.innerText = "None";
-	return false;
-};
-
-Tabs.uncheckall = function(){
-	var links_checked = document.querySelectorAll('.link:checked');
-	var checked = 0;
-	for( var i = 0; i < links_checked.length; i++){
-		links_checked[i].checked = false;
-		checked++;
-	}
-	if(checked != 0) check.innerText = "All";
 	
+	Tabs.countSelected();
+
 	return false;
 };
-
 
 Tabs.isUrl = function(s) {
 	return /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/.test(s);
@@ -212,7 +251,6 @@ Tabs.notification = function(type, message, hide){
 	notification.className = type;
 	notification.innerHTML = message;
 	notification.style.display = "block";
-	//$(notification).toggle();
 	
 	if(hide === undefined || hide == true){
 		setTimeout(function() { $(notification).toggle(); }, 3000);
@@ -230,7 +268,7 @@ Tabs.dumpTreeNodes = function(bookmarkNodes, deep) {
 };
 
 Tabs.dumpNode = function(bookmarkNode, deep) {
-	if (bookmarkNode.children){ // bookmarkNode.children.length > 0 can I get empty folder?
+	if (bookmarkNode.children){ 
 		
 		var option = "";
 		if (bookmarkNode.title) {
@@ -260,9 +298,9 @@ Tabs.buildDeepStyle = function(deep){
  
 document.addEventListener('DOMContentLoaded', function () {
 	$('check').bind('click', Tabs.checkall);
-	$('add').bind('click', Tabs.configAddToBookmark);
+	$('add').bind('click', Tabs.wrapAdd);
+	$('move').bind('click', Tabs.wrapMove);
 	$('copy').bind('click', Tabs.copyToClipboard);
-	
 	
 	$('create').bind('click', Tabs.configNewFolder);
 	$('save').bind('click', Tabs.saveBookmark);
