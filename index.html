@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link href="css/global-min.css" type="text/css" rel="stylesheet" />
+		<link href="css/global.css" type="text/css" rel="stylesheet" />
 	</head>
 	<body>
 		<main>
@@ -16,37 +16,42 @@
 						<ul id="urlList"></ul>
 					</fieldset>
 					<fieldset>
-						<div id="add"class="btn favorites">
-							<span class="icon">&nbsp;</span>
-							<input type="button" value="Add favorites">
-						</div>
-						<div id="copy" class="btn clipboard">
-							<span class="icon">&nbsp;</span>
-							<input type="button" value="Copy to clipboard"><!--value change to "It's Copied!"-->
+						<div>
+							<div>
+								<input id="add" type="button" value="Add favorites" class="btn">
+							</div>
+							<div>
+								<input id="copy" type="button" value="Copy clipboard" class="btn"><!--value change to "It's Copied!"-->
+							</div>
 						</div>
 					</fieldset>
 					<fieldset id="bookmark" style="display:none">
 						<h2>Bookmark list</h2>
 						<select id="bookmarkList"></select>
 						<input id="newfolder" type="text" placeholder="Name to folder" style="display:none">
-						<div id="create" class="btn new">
-							<span class="icon">&nbsp;</span>
-							<input type="button" value="New folder">
-						</div>
-						<div id="save" class="btn save">
-							<span class="icon">&nbsp;</span>
-							<input type="button" value="Save">
-						</div>
-						<div id="cancel" class="btn cancel">
-							<span class="icon">&nbsp;</span>
-							<input type="button" value="Cancel">
+						<div>
+							<div>
+								<input id="create" type="button" value="New folder" class="btn">
+							</div>
+							<div>
+								<input id="save" type="button" value="Save" class="btn">
+							</div>
+							<div>
+								<input id="cancel" type="button" value="Cancel" class="btn">
+							</div>
 						</div>
 					</fieldset>
 				</form>
 			</section>
 			<alert id="notification" class="" style="display:none"></alert>
 			<footer>
-				<p>About <a href="https://github.com/wsiqueira/savemytabs-chrome-ext/wiki" target="_blank" title="Save My Tabs">Save My Tabs</a></p>
+				<p>
+					Github <a href="https://github.com/wsiqueira/savemytabs-chrome-ext/wiki" target="_blank" title="Save my tabs">Save my tabs</a>
+				</p>
+				<p>
+					BTC: <span>1KtWK4DCgtuQUFTk2i5ykxUjyiVLd1azxA</span><br />
+					DOGE: <span>DMFHR9EXW2fCYvXuWhiuoCF3JkiHr5KMkq</span>
+				</p>
 			</footer>
 		</main>
 		<script src="js/init.js"></script>
