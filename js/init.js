@@ -19,35 +19,35 @@ var $ = function(e){
 	
 	if(typeof e === "string"){
 		el = window[e];
-	}
+	};
 	
 	if(el.length == 0){
 		el = document.querySelectorAll(e);
-	}
+	};
 	//console.log(el);
 
 	el.bind = function(event, func){
 		this.addEventListener(event, func);
-	}
+	};
 	
 	el.unbind = function(event, func){
 		this.removeEventListener(event, func);
-	}
+	};
 	
 	el.hide = function(){
 		this.style.display = "none";
-	}
+	};
 	
 	el.show = function(){
 		this.style.display = "block";
-	}
+	};
 	
 	el.toggle = function(){
 		this.style.display == "none" ? this.show() : this.hide();
-	}
+	};
 	
 	return el;
-}
+};
 
 var Tabs = function(){};
 
@@ -61,6 +61,7 @@ Tabs.cancelAddToBookmark = function(e){
 	$(notification).hide();
 	$(bookmark).hide();
 };
+
 Tabs.configNewFolder = function(e){
 	$(newfolder).show();
 	
@@ -77,6 +78,7 @@ Tabs.configNewFolder = function(e){
 	}
 	//this.unbind('click', Tabs.configNewFolder);
 };
+
 Tabs.saveBookmark = function(e){
 	
 	if(newfolder.value.length > 0){
@@ -212,10 +214,9 @@ Tabs.notification = function(type, message, hide){
 	notification.className = type;
 	notification.innerHTML = message;
 	notification.style.display = "block";
-	//$(notification).toggle();
 	
-	if(hide === undefined || hide == true){
-		setTimeout(function() { $(notification).toggle(); }, 3000);
+	if( hide === undefined || hide === true ) {
+		setTimeout(function() { $(notification).hide(); }, 3000);
 	}
 };
 
