@@ -1,14 +1,16 @@
 // SAVE MY TABS
-chrome.tabs.getAllInWindow(null, function(tabs) {
+chrome.tabs.query({
+	currentWindow: true,
+	pinned: false
+}, function(tabs) {
 	
 	var tabs_html = '',
 		count = 0;
 
-	tabs.filter(function(tab){
-		return ! tab.pinned && Tabs.isUrl(tab.url);
-	}).forEach(function(tab){
+	tabs.forEach(function(tab){
 		
-		tabs_html +='<li><input type="checkbox" class="link" checked="checked"/>' +
+		tabs_html +='<li><input type="checkbox" class="link" checked="checked" />' +
+					'	<img src="' + tab.favIconUrl + '" class="favicon" />' +
 					'	<a href="'+ tab.url + '" title="'+ htmlEscape(tab.title) + '" target="_blank">' + htmlEscape(tab.title) + '</a>' +
 					'</li>';
 
@@ -25,11 +27,11 @@ var $ = function(e){
 	
 	if(typeof e === "string"){
 		el = window[e];
-	};
+	}
 	
 	if(el.length === 0){
 		el = document.querySelectorAll(e);
-	};
+	}
 	//console.log(el);
 
 	el.bind = function(event, func){
@@ -49,7 +51,7 @@ var $ = function(e){
 	};
 	
 	el.toggle = function(){
-		this.style.display == "none" ? this.show() : this.hide();
+		return this.style.display == "none" ? this.show() : this.hide();
 	};
 	
 	return el;
@@ -150,14 +152,14 @@ Tabs.copyToClipboard = function(e){
 	var links_text = '';
 	var links_checked = document.querySelectorAll('.link:checked');
 	
-	if(links_checked.length == 0){
+	if(links_checked.length === 0){
 		Tabs.notification('alert', "Select a URL from list");
 		return false;
 	}
-	
-	for (var i = 0; i < links_checked.length; i++){
-		links_text += links_checked[i].nextSibling.href + "\n";
-	}
+
+	links_checked.forEach(function(link){
+		links_text += link.parentNode.lastChild.href + "\n";
+	});
 	
 	var textarea = document.createElement('textarea');
 	

@@ -91,3 +91,13 @@ alert{display:block;margin:5px 0 0 0;padding:6px;font-size:10px;border-width:1px
 	background:rgba(0,0,0, 0.4);
 }
 /* SCROLL ###################################################################################################*/
+
+
+.favicon {
+	float: left;
+	width: 16px;
+	height: 16px;
+	/*max-width: 16px;
+	max-height: 16px;*/
+	padding-right: 5px;
+}

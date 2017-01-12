@@ -1,4 +1,5 @@
 //const isURL = /(((https?:\/\/)|(www\.))[a-zA-Z0-9]{1,256}\.[a-zA-Z0-9]{1,4}\.?[a-zA-Z0-9]?\S+)|((www\.)?[a-zA-Z0-9]{1,256}\.[a-zA-Z0-9]{1,4}\.?[a-zA-Z0-9]?\S+)/gi;
+
 const isURL = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
 
 chrome.contextMenus.removeAll();
@@ -13,8 +14,6 @@ chrome.contextMenus.create({
 			const links = info.selectionText.match(isURL);
 
 			if( ! links ) return;
-
-			//links.forEach( link => window.open(link, '_blank') );
 			
 			chrome.tabs.getSelected(null, function(tab) {
 				links.forEach( (link, index) => chrome.tabs.create({
