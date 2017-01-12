@@ -1,4 +1,5 @@
-const URLS = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
+//const isURL = /(((https?:\/\/)|(www\.))[a-zA-Z0-9]{1,256}\.[a-zA-Z0-9]{1,4}\.?[a-zA-Z0-9]?\S+)|((www\.)?[a-zA-Z0-9]{1,256}\.[a-zA-Z0-9]{1,4}\.?[a-zA-Z0-9]?\S+)/gi;
+const isURL = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
 
 chrome.contextMenus.removeAll();
 
@@ -7,23 +8,22 @@ chrome.contextMenus.create({
 	contexts : ['selection'], 
 	onclick: function(info) {
 
-		const selectedText = info.selectionText;
+		if( info.selectionText ) {
 		
-		if( selectedText ) {
-		
-			const links = selectedText.match(URLS);
+			const links = info.selectionText.match(isURL);
 
-			links.forEach( link => window.open(link, '_blank') );
+			if( ! links ) return;
+
+			//links.forEach( link => window.open(link, '_blank') );
 			
-			/*chrome.tabs.getSelected(null,function(tab) {
-				for(var i = 0; i< text_links.length; i++){
-					chrome.tabs.create({
-						url: text_links[i],active: false, 
-						index: tab.index + 1 + i, 
-						openerTabId: tab.id
-					});
-				}
-			})*/
+			chrome.tabs.getSelected(null, function(tab) {
+				links.forEach( (link, index) => chrome.tabs.create({
+					url: link,
+					active: false,
+					index: tab.index + 1 + index,
+					openerTabId: tab.id
+				}) );
+			})
 		}
 	}
 });
