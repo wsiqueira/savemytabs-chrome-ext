@@ -1,11 +1,17 @@
 // SAVE MY TABS
 chrome.tabs.getAllInWindow(null, function(tabs) {
 	
-	var tabs_html = '';
-	var count = 0;
-	tabs.forEach(function(tab){
-		if(tab.pinned || !Tabs.isUrl(tab.url)) return;
-		tabs_html +='<li><input type="checkbox" class="link" checked="checked"/><a href="'+ tab.url + '" title="'+ tab.title + '" target="_blank">' + tab.title + '</a></li>';
+	var tabs_html = '',
+		count = 0;
+
+	tabs.filter(function(tab){
+		return ! tab.pinned && Tabs.isUrl(tab.url);
+	}).forEach(function(tab){
+		
+		tabs_html +='<li><input type="checkbox" class="link" checked="checked"/>' +
+					'	<a href="'+ tab.url + '" title="'+ htmlEscape(tab.title) + '" target="_blank">' + htmlEscape(tab.title) + '</a>' +
+					'</li>';
+
 		count++;
 	});
 	
@@ -21,7 +27,7 @@ var $ = function(e){
 		el = window[e];
 	};
 	
-	if(el.length == 0){
+	if(el.length === 0){
 		el = document.querySelectorAll(e);
 	};
 	//console.log(el);
@@ -137,7 +143,7 @@ Tabs.appendNewOption = function(title, value, parentId){
 	option.selected = true;
 	
 	var elem = bookmarkList.add(option, parentOption.nextSibling);
-}
+};
 
 Tabs.copyToClipboard = function(e){
 	
@@ -187,7 +193,7 @@ Tabs.checkall = function(){
 		links_checked[i].checked = true;
 		checked++;
 	}
-	if(checked == 0) Tabs.uncheckall();
+	if(checked === 0) Tabs.uncheckall();
 	else check.innerText = "None";
 	return false;
 };
@@ -199,7 +205,7 @@ Tabs.uncheckall = function(){
 		links_checked[i].checked = false;
 		checked++;
 	}
-	if(checked != 0) check.innerText = "All";
+	if(checked !== 0) check.innerText = 'All';
 	
 	return false;
 };
@@ -210,7 +216,6 @@ Tabs.isUrl = function(s) {
 };
 
 Tabs.notification = function(type, message, hide){
-
 	notification.className = type;
 	notification.innerHTML = message;
 	notification.style.display = "block";
@@ -248,8 +253,7 @@ Tabs.buildDeepStyle = function(deep){
 	deep = Math.max(deep - 1, 0) * 4;
 	while( deep--)result += str;
 	return result;
-}; 
- 
+};
  
 /* function addElementAfter(node,tag,id,htm){
 	var ne = document.createElement(tag);
@@ -257,20 +261,51 @@ Tabs.buildDeepStyle = function(deep){
 	if(htm) ne.innerHTML = htm;
 	node.parentNode.insertBefore(ne,node.nextSibling);
 }*/
- 
- 
+
 document.addEventListener('DOMContentLoaded', function () {
 	$('check').bind('click', Tabs.checkall);
 	$('add').bind('click', Tabs.configAddToBookmark);
 	$('copy').bind('click', Tabs.copyToClipboard);
 	
-	
 	$('create').bind('click', Tabs.configNewFolder);
 	$('save').bind('click', Tabs.saveBookmark);
 	$('cancel').bind('click', Tabs.cancelAddToBookmark);
-	
 });
 
 String.prototype.trim = function(){
 	return this.replace(/^\s+|\s+$/g, ''); 
+};
+
+/*var tagsToReplace = {
+	'&': '&amp;',
+	'<': '&lt;',
+	'>': '&gt;',
+	'"': '&quot;',
+	'\'': '&#39'
+};
+
+function replaceTag(tag) {
+    return tagsToReplace[tag] || tag;
 }
+
+function safe_tags_replace(str) {
+    return str.replace(/[&<>]/g, replaceTag);
+}
+*/
+function htmlEscape(str) {
+	return str
+		.replace(/&/g, '&amp;')
+		.replace(/"/g, '&quot;')
+		.replace(/'/g, '&#39;')
+		.replace(/</g, '&lt;')
+		.replace(/>/g, '&gt;');
+}
+
+/*function htmlUnescape(str){
+	return str
+		.replace(/&quot;/g, '"')
+		.replace(/&#39;/g, "'")
+		.replace(/&lt;/g, '<')
+		.replace(/&gt;/g, '>')
+		.replace(/&amp;/g, '&');
+}*/
