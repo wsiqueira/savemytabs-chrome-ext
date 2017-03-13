@@ -3,10 +3,10 @@
 	"default_locale": "en",
 	"description": "__MSG_description__",
 	"manifest_version": 2,
-	"version": "1.0.5",
+	"version": "1.0.6",
 	
 	"background": {
-		"scripts": ["js/tabs.js"]
+		"scripts": ["js/links.js"]
 	},
 	
 	"permissions": [
