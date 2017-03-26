@@ -1,6 +1,8 @@
 Save My Tabs
 -------
-[1]: <https://chrome.google.com/webstore/detail/save-my-tabs/djadfifncobffjpicnkiegahdiobpaap>
+[1]: <https://github.com/wsiqueira/savemytabs-chrome-ext>
+
+[On Chrome Webstore](https://chrome.google.com/webstore/detail/save-my-tabs/djadfifncobffjpicnkiegahdiobpaap)
 
 Save all tabs at once.
 
@@ -11,7 +13,7 @@ After the click, you have the option of:
 - Copy to clipboard, which allows it to where you want to paste the links and can send it by email, message, etc..
 In addition to saving the tabs that are open in your browser, Save my Tabs has the capability to open multiple tabs content from a list of URL's. You can select a list of URL's and with the right mouse button to choose "Open links in new tabs."
 
-by [Willian Siqueira](http://web.sogringagem.com.br/) and [Lucas Monteverde](http://lucasmonteverde.com/)
+by [Willian Siqueira](https://github.com/wsiqueira) and [Lucas Monteverde](http://lucasmonteverde.com/)
 
 BTC: 1KtWK4DCgtuQUFTk2i5ykxUjyiVLd1azxA  
 DOGE: DMFHR9EXW2fCYvXuWhiuoCF3JkiHr5KMkq
