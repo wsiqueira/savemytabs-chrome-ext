@@ -8,7 +8,7 @@ chrome.tabs.query({
 		return tab.url.indexOf('chrome://') === -1;
 	});
 
-	console.log(tabs);
+	// console.log(tabs);
 	
 	urlList.innerHTML = tabs.map(function(tab){
 		return '<li><input type="checkbox" class="link" checked="checked" />' +

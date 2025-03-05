@@ -2,24 +2,14 @@
 
 var isURL = /(\b(https?|ftp|file):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gi;
 
+
+
 chrome.contextMenus.removeAll();
 
 chrome.contextMenus.create({
 	title : 'Open links in new tabs', 
-	contexts : ['selection'], 
-	onclick: function(info) {
-
-		if( info.selectionText ) {
-		
-			var links = info.selectionText.match(isURL);
-
-			if( ! links ) return;
-			
-			chrome.tabs.getSelected(null, function(tab) {
-				links.forEach( createTab.bind(tab) );
-			});
-		}
-	}
+	contexts : ['selection'],
+	id: 'selection'
 });
 
 function createTab(link, index) {
@@ -30,3 +20,21 @@ function createTab(link, index) {
 		openerTabId: this.id
 	});
 }
+
+function clickHandler(info, tab) {
+    "use strict";
+    // console.log(info);
+    // console.log(tab);
+    
+	if( info.selectionText ) {
+		var links = info.selectionText.match(isURL);
+
+		if( ! links ) return;
+		
+		chrome.tabs.getSelected(null, function(tab) {
+			links.forEach( createTab.bind(tab) );
+		});
+	}
+}
+
+chrome.contextMenus.onClicked.addListener(clickHandler);

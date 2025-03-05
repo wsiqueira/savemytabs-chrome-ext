@@ -2,25 +2,25 @@
 	"name": "Save my Tabs",
 	"default_locale": "en",
 	"description": "__MSG_description__",
-	"manifest_version": 2,
+	"manifest_version": 3,
 	"version": "1.0.6",
-	
 	"background": {
-		"scripts": ["js/links.js"]
-	},
-	
+      "service_worker": "js/links.js",
+      "type": "module"
+    },
 	"permissions": [
 		"contextMenus",
 		"bookmarks",
-		"tabs"],
-	
-	"browser_action": {
+		"tabs"
+	],
+	"action": {
 		"default_title": "Save my Tabs",
 		"default_icon": "img/icons/icon48.png",
-		"default_popup": "index.html"},
-	
+		"default_popup": "index.html"
+	},
 	"icons": {
 		"16": "img/icons/icon16.png",
 		"48": "img/icons/icon48.png",
-		"128": "img/icons/icon128.png"}
+		"128": "img/icons/icon128.png"
+	}
 }
